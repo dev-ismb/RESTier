@@ -176,7 +176,10 @@ namespace Microsoft.Restier.AspNet.Model
             if (type == typeof(DateTime))
             {
                 // TODO GitHubIssue#49 : how to map DateTime's in OData v4?  there is no Edm.DateTime type anymore
-                return null;
+       			// IS 2020-09-01 
+                return EdmPrimitiveTypeKind.Date;
+                //return null;
+       			// IS 2020-09-01 
             }
 
             if (type == typeof(DateTimeOffset))
@@ -229,7 +232,10 @@ namespace Microsoft.Restier.AspNet.Model
                 // TODO GitHubIssue#49 : this should really be TimeOfDay,
                 // but EdmPrimitiveTypeKind doesn't support that type.
                 ////return EdmPrimitiveTypeKind.TimeOfDay;
-                return EdmPrimitiveTypeKind.Duration;
+       			// IS 2020-09-01 
+                //return EdmPrimitiveTypeKind.Duration;
+                return EdmPrimitiveTypeKind.TimeOfDay;
+       			// IS 2020-09-01 
             }
 
             if (type == typeof(void))
