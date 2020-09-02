@@ -245,13 +245,16 @@ namespace Microsoft.Restier.Core.Query
                 return null;
             }
 
+   			// IS 2020-09-01 
+            // AE 2019-07-04 commentnato in quanto da errore su filtri data > e non esistente
             // Key segment will have ConstantExpression but $filter will not have ConstantExpression
-            var rightExpression = binaryExpression.Right as ConstantExpression;
-            if (rightExpression != null && rightExpression.Value != null)
-            {
-                // This means where statement is key segment but not for $filter
-                throw new StatusCodeException(HttpStatusCode.NotFound, Resources.ResourceNotFound);
-            }
+            //var rightExpression = binaryExpression.Right as ConstantExpression;
+            //if (rightExpression != null && rightExpression.Value != null)
+            //{
+            //    // This means where statement is key segment but not for $filter
+            //    throw new StatusCodeException(HttpStatusCode.NotFound, Resources.ResourceNotFound);
+            //}
+   			// IS 2020-09-01 
 
             return methodCallExpression.Arguments[0] as MethodCallExpression;
         }
