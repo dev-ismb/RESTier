@@ -31,6 +31,19 @@ namespace Microsoft.Restier.AspNet.Formatter
                 Request = request
             };
 
+			// IS 2020-09-01 
+            // primitive value
+            if (propertyType.IsPrimitive())
+            {
+                if(odataValue is OData.UriParser.ConstantNode)
+                {
+                    OData.UriParser.ConstantNode node = odataValue as OData.UriParser.ConstantNode;
+                    return node.Value;
+                }
+                //return EdmPrimitiveHelpers.ConvertPrimitiveValue(node != null ? node.Value : graph, clrType);
+            }
+			// IS 2020-09-01 
+
             var returnValue = ODataModelBinderConverter.Convert(odataValue, propertyType, expectedReturnType, parameterName, readContext, serviceProvider);
 
             if (!propertyType.IsCollection())
