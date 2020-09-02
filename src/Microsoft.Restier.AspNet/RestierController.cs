@@ -540,7 +540,12 @@ namespace Microsoft.Restier.AspNet
                     return Request.CreateResponse(HttpStatusCode.OK, new NonResourceCollectionResult(query, typeReference));
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, new ResourceSetResult(query, typeReference));
+       			// IS 2020-09-01 
+                //return Request.CreateResponse(HttpStatusCode.OK, new ResourceSetResult(query, typeReference));
+                response = Request.CreateResponse(HttpStatusCode.OK, new ResourceSetResult(query, typeReference));
+                response.Headers.TransferEncodingChunked = true;
+                return response;
+       			// IS 2020-09-01 
             }
 
             var entityResult = query.SingleOrDefault();
