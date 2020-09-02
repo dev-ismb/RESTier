@@ -170,15 +170,21 @@ namespace Microsoft.Restier.AspNet
 
                 if (lastSegment is OperationSegment)
                 {
-                    result = await ExecuteQuery(queryable, cancellationToken).ConfigureAwait(false);
+       				// IS 2020-09-01 
+                    var applied = await ApplyQueryOptionsAsync(queryable, path, false).ConfigureAwait(false);
+                    result = await ExecuteQuery(applied.Queryable, cancellationToken).ConfigureAwait(false);
+                    //result = await ExecuteQuery(queryable, cancellationToken).ConfigureAwait(false);
+       				// IS 2020-09-01 
 
                     var boundSeg = (OperationSegment)lastSegment;
                     var operation = boundSeg.Operations.FirstOrDefault();
                     Func<string, object> getParaValueFunc = p => boundSeg.Parameters.FirstOrDefault(c => c.Name == p).Value;
                     result = await ExecuteOperationAsync(getParaValueFunc, operation.Name, true, result, cancellationToken).ConfigureAwait(false);
 
-                    var applied = await ApplyQueryOptionsAsync(result, path, true).ConfigureAwait(false);
-                    result = applied.Queryable;
+       				// IS 2020-09-01 
+                    //var applied = await ApplyQueryOptionsAsync(result, path, true).ConfigureAwait(false);
+                    //result = applied.Queryable;
+       				// IS 2020-09-01 
                     etag = applied.Etag;
 
                 }
