@@ -66,6 +66,9 @@ namespace System.Linq.Expressions
             var expression = query.Expression;
 
             // This is stripping select, expand and top from input query
+   			// IS 2020-09-01 
+            //expression = StripQueryMethod(expression, MethodNameOfQuerySelect);
+   			// IS 2020-09-01 
             expression = StripQueryMethod(expression, MethodNameOfQueryTake);
             expression = StripQueryMethod(expression, MethodNameOfQuerySkip);
             expression = StripQueryMethod(expression, MethodNameOfQuerySelect);
@@ -149,6 +152,20 @@ namespace System.Linq.Expressions
                     return methodCallExpression;
                 }
             }
+   			// IS 2020-09-01 
+            // AE stesso errore della count con $expand
+            // su queri vuote
+            // da capire impatto
+            if (methodCallExpression.Method.Name == MethodNameOfQuerySelect)
+            {
+                // Check where it is expand case or select, if yes, need to get rid of last select
+                methodCallExpression = RemoveSelectExpandStatement(methodCallExpression);
+                if (methodCallExpression == null || methodCallExpression.Arguments.Count != 2)
+                {
+                    return methodCallExpression;
+                }
+            }
+   			// IS 2020-09-01 
 
             if (methodCallExpression.Method.Name == MethodNameOfQueryOrderBy)
             {
