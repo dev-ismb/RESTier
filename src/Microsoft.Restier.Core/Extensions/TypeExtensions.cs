@@ -12,7 +12,10 @@ namespace System
                                                                  BindingFlags.Static |
                                                                  BindingFlags.Instance |
                                                                  BindingFlags.IgnoreCase |
-                                                                 BindingFlags.DeclaredOnly;
+                                                                 // IS IS 2021-02-015
+                                                                 // consider also parent class methods
+                                                                 //BindingFlags.DeclaredOnly |
+                                                                 BindingFlags.FlattenHierarchy;
 
         /// <summary>
         /// Find a base type or implemented interface which has a generic definition
